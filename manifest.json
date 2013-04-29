@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Take Stock 2",
+  "name": "Take Stock",
   "description": "This extension shows stock information when you highlight a valid stock symbol in Twitter",
   "version": "0.1",
 
