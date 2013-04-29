@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "Take Stock 2",
+  "description": "This extension shows stock information when you highlight a valid stock symbol in Twitter",
+  "version": "0.1",
+
+  "browser_action": {
+    "default_icon": "dollarSign2.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["lib/jquery-1.9.1.min.js", "stockdata.js", "server.js", "serverhandler.js"]
+    }
+  ], 
+
+  "permissions": [
+    "http://*.yahoo.com/*",
+    "https://twitter.com/*"
+  ]
+}
