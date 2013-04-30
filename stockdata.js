@@ -30,7 +30,9 @@ $(document).ready(function() {
         var stockName = dataArray[0];
         var lastPrice = dataArray[1];
         var previousClose = dataArray[2];
-        if(previousClose >= 0) {
+        if(selectedText === '') {
+          return;
+        } else if(previousClose >= 0) {
           $('body').append(
           '<container class="popup"><h4>' +
             '<div><strong>ID:</strong> ' + stockName + '</div>' +
