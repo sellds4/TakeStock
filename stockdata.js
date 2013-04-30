@@ -32,11 +32,11 @@ $(document).ready(function() {
         var previousClose = dataArray[2];
         if(previousClose >= 0) {
           $('body').append(
-          '<container class="popup">' +
-            '<div>ID: ' + stockName + '</div>' +
-            '<div>Current Price: $' + lastPrice + '<div>' +
-            '<div>Prev Close: $' + previousClose + '<div>' +
-          '</container>'
+          '<container class="popup"><h4>' +
+            '<div><strong>ID:</strong> ' + stockName + '</div>' +
+            '<div><strong>Current Price:</strong> $' + lastPrice + '<div>' +
+            '<div><strong>Prev Close:</strong> $' + previousClose + '<div>' +
+          '</h4></container>'
           );
           $('.popup').css('top', e.pageY)
           .css('left', e.pageX)
@@ -54,11 +54,19 @@ $(document).ready(function() {
             {
               data = $.parseJSON(data);
               console.log(data);
+              var color;
               for(var i = 0; i < 5; i++){
+                if(i % 2 === 0) {
+                  color = 'white';
+                } else {
+                  color = '#eeeeee';
+                }
                 $('.popup').append(
-                  '<div class="tweet">' + data[i].text + '</div>' +
-                  '<div class="tweet">' + data[i].from_user + '</div>' +
-                  '<div class="tweet">' + data[i].created_at + '</div>'
+                  '<container class="tweet" style="background-color:' + color + '"><h5>' +
+                    '<div class="tweettext">' + data[i].text + '</div>' +
+                    '<div class="tweetuser">' + data[i].from_user + '</div>' +
+                    '<div class="tweetdate">' + data[i].created_at + '</div>' +
+                  '</h5></container>'
                 );
               }
             }
