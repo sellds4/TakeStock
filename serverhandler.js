@@ -12,11 +12,14 @@ var handleRequest = function(req, res) {
 
   if(req.method === "GET" && url.parse(req.url)) {
     console.log('url:', url.parse(req.url).pathname);
-    var stockHashes = '$' + url.parse(req.url).pathname.toString().substr(1) + ' OR #' + url.parse(req.url).pathname.toString().substr(1);
-    console.log('stockHashes:', stockHashes);
-    twit.search(stockHashes, {}, function(err, data) {
-      console.log(data.results[0].id, data.results[0].text, data.results[0].created_at);
-      return data;
+    var stockHash = '$' + url.parse(req.url).pathname.toString().substr(1);
+    console.log('stockHash:', stockHash);
+    twit.search(stockHash, {'lang':'en'}, function(err, data) {
+      if(data == null) {
+        return;
+      } else {
+        res.end(JSON.stringify(data.results));
+      }
     });
   } else {
     return;
