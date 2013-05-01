@@ -2,11 +2,20 @@ var tweetCSS = {
   'font-size':'14px',
   'position':'absolute',
   'width':'400px',
-  'background':'white',
+  'background':'#BEBEBE',
   'color':'#000000',
-  'border':'5px double rgba(135, 145, 180, 0.75)',
+  'border':'5px double rgba(165, 10, 10, 0.75)',
   'border-radius':'10px',
-  'text-align':'left'
+  'text-align':'left',
+  'z-index':9999
+};
+
+var noinfoCSS = {
+  'text-align': 'center',
+  'padding': '10px',
+  'background-color': '#eeeeee',
+  'width': '250px',
+  'border': '1px solid black'
 };
 
 var stockdataCSS = {
@@ -41,7 +50,7 @@ var tweetGet = function(data, firstTweet, lastTweet) {
     if(i % 2 === 0) {
       color = '#C3E1FF';
     } else {
-      color = '#eeeeee';
+      color = '#78B4EB';
     }
     $('.popup').append(
       '<container class="tweet">' +
@@ -52,12 +61,19 @@ var tweetGet = function(data, firstTweet, lastTweet) {
     );
   }
   $('.popup').append(
-    '<div class="moretweets" style="padding:5px; text-align:right; border-top:2px solid rgba(135, 145, 180, 0.75)"><a href="#">More Tweets</a></div>'
+    '<div class="moretweets" style="padding:5px; text-align:right; background-color:#BEBEBE; border-top:2px solid rgba(165, 10, 10, 0.75)"><a href="#">More Tweets</a></div>'
     );
 };
 
 $(document).ready(function() {
+  // var hasPopup = false;
   $('body').mouseup(function(e) {
+    // console.log(hasPopup)
+    // if(hasPopup === true) {
+    //     return;
+    // }
+    // console.log("Mouseup")
+    // hasPopup = true;
     var selectedText = getSelectedText();
     var firstTweetIndex = 0;
     var lastTweetIndex = 5;
@@ -82,9 +98,9 @@ $(document).ready(function() {
         } else if(previousClose >= 0) {
           $('body').append(
           '<container class="popup">' +
-            '<div class="stockdata"><strong>ID:</strong> ' + stockName + '</div>' +
-            '<div class="stockdata"><strong>Current Price:</strong><var style="color:' + priceColor + '">$' + lastPrice + '</var></div>' +
-            '<div class="stockdata" style="border-bottom:2px solid rgba(135, 145, 180, 0.75)"><strong>Prev Close:</strong> $' + previousClose + '</div>' +
+            '<div class="stockdata"><strong>ID: </strong>' + stockName + '</div>' +
+            '<div class="stockdata"><strong>Current Price: </strong><var style="font-style:normal; color:' + priceColor + '">$' + lastPrice + '</var></div>' +
+            '<div class="stockdata" style="border-bottom:2px solid rgba(165, 10, 10, 0.75)"><strong>Prev Close: </strong>$' + previousClose + '</div>' +
           '</container>'
           );
           $('.popup').css(tweetCSS)
@@ -99,6 +115,15 @@ $(document).ready(function() {
               data = $.parseJSON(data);
               console.log(data);
               tweetGet(data, firstTweetIndex, lastTweetIndex);
+              // $('.moretweets').click(function(e) {
+              //   console.log("More Tweets");
+              //   e.preventDefault();
+              //   $('.tweet').remove();
+              //   firstTweetIndex += 5;
+              //   lastTweetIndex += 5;
+              //   console.log(firstTweetIndex, lastTweetIndex);
+              //   tweetGet(data, firstTweetIndex, lastTweetIndex);
+              // });
             }
           });
         } else {
@@ -108,23 +133,14 @@ $(document).ready(function() {
           $('.popup').css(tweetCSS)
           .css('top', e.pageY)
           .css('left', e.pageX)
-          .css('padding', '10px')
-          .css('background-color', '#eeeeee')
-          .css('width', '250px')
-          .css('border', '1px solid black');
+          .css(noinfoCSS);
         }
       }
     });
-    // $('.moretweets').click(function(e) {
-    //   e.preventDefault();
-    //   $('.tweet').remove();
-    //   firstTweetIndex += 5;
-    //   lastTweetIndex += 5;
-    //   tweetGet(data, firstTweetIndex, lastTweetIndex);
-    // });
     $('body').click(function() {
+      // hasPopup = false;
       $('.popup').remove();
-      $('moretweets').remove();
+      $('.moretweets').remove();
     });
   });
 });
