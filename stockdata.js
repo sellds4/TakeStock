@@ -1,3 +1,17 @@
+var tweetCSS = {
+  'font-size':'14px',
+  'position':'absolute',
+  'width':'400px',
+  'background':'white',
+  'color':'#000000',
+  'border':'5px double rgba(135, 145, 180, 0.75)',
+  'border-radius':'10px'
+};
+
+var stockdataCSS = {
+  'padding':'5px 10px'
+};
+
 var getSelectedText = function() {
     var text = "";
     if (window.getSelection) {
@@ -34,21 +48,16 @@ $(document).ready(function() {
           return;
         } else if(previousClose >= 0) {
           $('body').append(
-          '<container class="popup"><h4>' +
-            '<div><strong>ID:</strong> ' + stockName + '</div>' +
-            '<div><strong>Current Price:</strong> $' + lastPrice + '<div>' +
-            '<div><strong>Prev Close:</strong> $' + previousClose + '<div>' +
-          '</h4></container>'
+          '<container class="popup">' +
+            '<div class="stockdata"><strong>ID:</strong> ' + stockName + '</div>' +
+            '<div class="stockdata"><strong>Current Price:</strong> $' + lastPrice + '</div>' +
+            '<div class="stockdata" style="border-bottom:2px solid rgba(135, 145, 180, 0.75)"><strong>Prev Close:</strong> $' + previousClose + '</div>' +
+          '</container>'
           );
-          $('.popup').css('top', e.pageY)
-          .css('left', e.pageX)
-          .css('position', 'absolute')
-          .css('width', 'auto')
-          .css('padding', '10px')
-          .css('background', '#eeeeee')
-          .css('color', '#000000')
-          .css('border', '1px solid #1a1a1a')
-          .css('font-size', '90%');
+          $('.popup').css(tweetCSS)
+          .css('top', e.pageY)
+          .css('left', e.pageX);
+          $('.stockdata').css(stockdataCSS);
           $.ajax({
             url: 'http://127.0.0.1:8080/' + selectedText,
             error: function(){ console.log('Error'); },
@@ -59,16 +68,16 @@ $(document).ready(function() {
               var color;
               for(var i = 0; i < 5; i++){
                 if(i % 2 === 0) {
-                  color = 'white';
+                  color = '#C3E1FF';
                 } else {
                   color = '#eeeeee';
                 }
                 $('.popup').append(
-                  '<container class="tweet" style="background-color:' + color + '"><h5>' +
-                    '<div class="tweettext">' + data[i].text + '</div>' +
-                    '<div class="tweetuser">' + data[i].from_user + '</div>' +
-                    '<div class="tweetdate">' + data[i].created_at + '</div>' +
-                  '</h5></container>'
+                  '<container class="tweet">' +
+                    '<div class="tweettext" style="padding:5px 10px 7px 10px; font-style:italic; background-color:' + color + '"><strong>' + data[i].text + '</strong></div>' +
+                    '<div class="tweetuser" style="padding:0 0 2px 10px; font-size:12px;background-color:' + color + '">- ' + data[i].from_user + '</div>' +
+                    '<div class="tweetdate" style="padding:0 0 5px 10px; font-size:11px;background-color:' + color + '">' + data[i].created_at + '</div>' +
+                  '</container>'
                 );
               }
             }
@@ -77,15 +86,13 @@ $(document).ready(function() {
           $('body').append(
           '<container class="popup" style="text-align:center">No Pricing Information Available</container>'
           );
-          $('.popup').css('top', e.pageY)
+          $('.popup').css(tweetCSS)
+          .css('top', e.pageY)
           .css('left', e.pageX)
-          .css('position', 'absolute')
-          .css('width', '280px')
           .css('padding', '10px')
-          .css('background', '#eeeeee')
-          .css('color', '#000000')
-          .css('border', '1px solid #1a1a1a')
-          .css('font-size', '90%');
+          .css('background-color', '#eeeeee')
+          .css('width', '250px')
+          .css('border', '1px solid black');
         }
       }
     });
