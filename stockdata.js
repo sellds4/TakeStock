@@ -2,7 +2,7 @@ var tweetCSS = {
   'font-size':'14px',
   'position':'absolute',
   'width':'400px',
-  'background':'#BEBEBE',
+  'background':'#FFFDD0',
   'color':'#000000',
   'border':'5px double rgba(165, 10, 10, 0.75)',
   'border-radius':'10px',
@@ -61,7 +61,7 @@ var tweetGet = function(data, firstTweet, lastTweet) {
     );
   }
   $('.popup').append(
-    '<div class="moretweets" style="padding:5px; text-align:right; background-color:#BEBEBE; border-top:2px solid rgba(165, 10, 10, 0.75)"><a href="#">More Tweets</a></div>'
+    '<div class="moretweets" style="padding:5px; text-align:right; background-color:#FFFDD0; border-top:2px solid rgba(165, 10, 10, 0.75)"><a href="#">More Tweets</a></div>'
     );
 };
 
