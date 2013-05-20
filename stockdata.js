@@ -1,7 +1,7 @@
 var tweetCSS = {
   'font-size':'14px',
   'position':'absolute',
-  'width':'400px',
+  'width':'425px',
   'background':'#FFFDD0',
   'color':'#000000',
   'border':'5px double rgba(165, 10, 10, 0.75)',
@@ -19,8 +19,7 @@ var noinfoCSS = {
 };
 
 var stockdataCSS = {
-  'padding':'5px 10px',
-  'text-align':'left'
+  'padding':'10px 0 5px 0'
 };
 
 var getSelectedText = function() {
@@ -60,33 +59,34 @@ var tweetGet = function(data, firstTweet, lastTweet) {
       '</container>'
     );
   }
-  $('.popup').append(
-    '<div class="moretweets" style="padding:5px; text-align:right; background-color:#FFFDD0; border-top:2px solid rgba(165, 10, 10, 0.75)"><a href="#">More Tweets</a></div>'
-    );
+  // $('.popup').append(
+  //   '<div clas s="moretweets" style="padding:5px; text-align:right; background-color:#FFFDD0; border-top:2px solid rgba(165, 10, 10, 0.75)"><a href="#">More Tweets</a></div>'
+  // );
 };
 
+//n=Name[0], s=symbol[1], l1=LastTrade[2], p=PreviousClose[3], o=Open[4], b=Bid[5], a=Ask[6], g=Day'sLow[7], h=Day'sHigh[8]
+
 $(document).ready(function() {
-  // var hasPopup = false;
-  $('body').mouseup(function(e) {
-    // console.log(hasPopup)
-    // if(hasPopup === true) {
-    //     return;
-    // }
-    // console.log("Mouseup")
-    // hasPopup = true;
+  $('body').click(function(e) {
     var selectedText = getSelectedText();
     var firstTweetIndex = 0;
     var lastTweetIndex = 5;
     var mouseX = e.pageX;
     var mouseY = e.pageY;
     $.ajax({
-      url: 'http://download.finance.yahoo.com/d/quotes.csv?s=' + selectedText + '&f=nl1p0&e=.csv',
+      url: 'http://download.finance.yahoo.com/d/quotes.csv?s=' + selectedText + '&f=nsl1pobagh',
       success: function(data)
       {
         var dataArray = data.split(',');
         var stockName = dataArray[0];
-        var lastPrice = dataArray[1];
-        var previousClose = dataArray[2];
+        var stockSymbol = dataArray[1];
+        var lastPrice = dataArray[2];
+        var previousClose = dataArray[3];
+        var openPrice = dataArray[4];
+        var bid = dataArray[5];
+        var ask = dataArray[6];
+        var daysLow = dataArray[7];
+        var daysHigh = dataArray[8];
         var priceColor;
         if(lastPrice > previousClose) {
           priceColor = 'green';
@@ -98,14 +98,19 @@ $(document).ready(function() {
         } else if(previousClose >= 0) {
           $('body').append(
           '<container class="popup">' +
-            '<div class="stockdata"><strong>ID: </strong>' + stockName + '</div>' +
-            '<div class="stockdata"><strong>Current Price: </strong><var style="font-style:normal; color:' + priceColor + '">$' + lastPrice + '</var></div>' +
-            '<div class="stockdata" style="border-bottom:2px solid rgba(165, 10, 10, 0.75)"><strong>Prev Close: </strong>$' + previousClose + '</div>' +
+            '<div class="stockdata" style="color:blue; font-size:125%; text-align:center"><strong>' + stockName + ' (' + stockSymbol + ')</strong></div>' +
+            '<div><table width=100%>' +
+            '<tr><th>Current Price:</th><td style="color:' + priceColor + '">$' + lastPrice + '</td><th>Current Bid:</th><td>$' + bid + '</td></tr>' +
+            '<tr><th>Today&#39s Open:</th><td>$' + openPrice + '</td><th>Current Ask:</th><td>$' + ask + '</td></tr>' +
+            '<tr><th>Previous Close:</th><td>$' + previousClose + '</td><th>Day&#39s Range:</th><td>$' + daysLow + '-$' + daysHigh + '</td></tr>' +
+            '</table></div>' +
+            '<div class="stockgraph" style="border-bottom:2px solid rgba(165, 10, 10, 0.75); padding:10px 0 10px 35px"><img src="http://chart.finance.yahoo.com/z?s=' + selectedText + '&t=6m&q=l&l=on&z=s&p=m50,m200"></div>' +
           '</container>'
           );
           $('.popup').css(tweetCSS)
           .css('top', mouseY)
           .css('left', mouseX);
+          $('.popup').find('th').css({'padding-left':'10px'});
           $('.stockdata').css(stockdataCSS);
           $.ajax({
             url: 'http://127.0.0.1:8080/' + selectedText,
@@ -115,15 +120,6 @@ $(document).ready(function() {
               data = $.parseJSON(data);
               console.log(data);
               tweetGet(data, firstTweetIndex, lastTweetIndex);
-              // $('.moretweets').click(function(e) {
-              //   console.log("More Tweets");
-              //   e.preventDefault();
-              //   $('.tweet').remove();
-              //   firstTweetIndex += 5;
-              //   lastTweetIndex += 5;
-              //   console.log(firstTweetIndex, lastTweetIndex);
-              //   tweetGet(data, firstTweetIndex, lastTweetIndex);
-              // });
             }
           });
         } else {
@@ -138,9 +134,18 @@ $(document).ready(function() {
       }
     });
     $('body').click(function() {
-      // hasPopup = false;
       $('.popup').remove();
       $('.moretweets').remove();
+    });
+    $('.moretweets').click(function(e) {
+      console.log("More Tweets");
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      $('.tweet').remove();
+      firstTweetIndex += 5;
+      lastTweetIndex += 5;
+      console.log(firstTweetIndex, lastTweetIndex);
+      tweetGet(data, firstTweetIndex, lastTweetIndex);
     });
   });
 });
