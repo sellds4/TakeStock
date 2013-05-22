@@ -3,7 +3,7 @@ TakeStock
 TakeStock is a Google Chrome Extension that allows the user to see stock data and recent Tweets just by highlighting any text on a loaded webpage.  Upon highlighting, a popup containing stock pricing information, a stock graph, and a Twitter feed is overlayed on the page.
 
 ##Features
-1.  Ability to obtain stock pricing data, both numerical and graphical, as well as recent Tweets, simply by highlighting text on an active webpage.
+Ability to obtain stock pricing data, both numerical and graphical, as well as recent Tweets, simply by highlighting text on an active webpage.
 
 ##Technology
 1.  Node.js
