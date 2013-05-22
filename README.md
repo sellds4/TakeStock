@@ -22,4 +22,14 @@ You may obtain pre-compiled Node.js binaries for several platforms from http://n
 
 `npm install ntwitter` (https://github.com/AvianFlu/ntwitter)
 
+####Install the Google Chrome Extension
+Either navigate to `chrome://extensions/` in the web address bar or 
+1. Click the Chrome menu  on the browser toolbar.
+2. Select Tools.
+3. Select Extensions.
+ 
+To install TakeStock, click on `Load unpacked extension...` and navigate to the TakeStock folder and click `Open`
+
+If you would like to disable the Extension, simply unselect the "Enabled" checkbox for the TakeStock extension 
+
 NOTE:  You will need to register your app with the Twitter API (https://dev.twitter.com/).  Also, to run the server locally after installing Node.js, simply type "node server.js" in the command line ensuring that you have access to the TakeStock local folder.
