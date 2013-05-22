@@ -24,9 +24,9 @@ You may obtain pre-compiled Node.js binaries for several platforms from http://n
 
 ####Install the Google Chrome Extension
 Either navigate to `chrome://extensions/` in the web address bar or 
-1. Click the Chrome menu  on the browser toolbar.
-2. Select Tools.
-3. Select Extensions.
+1) Click the Chrome menu  on the browser toolbar.
+2) Select Tools.
+3) Select Extensions.
  
 To install TakeStock, click on `Load unpacked extension...` and navigate to the TakeStock folder and click `Open`
 
