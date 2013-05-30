@@ -8,7 +8,7 @@ Ability to obtain stock pricing data, both numerical and graphical, as well as r
 ##Technology
 1.  Node.js
 2.  Twitter API Integration
-3.  Finance.Yahoo.com API Integration
+3.  Yahoo Finance (finance.yahoo.com) API Integration
 
 ##Installation
 
